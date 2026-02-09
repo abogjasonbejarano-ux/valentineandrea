@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mi Valentine ❤️</title>
+
+<style>
+body{
+margin:0;
+font-family: 'Segoe UI', sans-serif;
+background:black;
+color:white;
+overflow:hidden;
+text-align:center;
+}
+
+/* SLIDESHOW */
+
+.slide{
+position:absolute;
+width:100%;
+height:100vh;
+object-fit:cover;
+opacity:0;
+transition:opacity 1.5s ease-in-out;
+}
+
+.active{
+opacity:1;
+}
+
+/* CORAZONES */
+
+.heart{
+position:absolute;
+color:pink;
+font-size:20px;
+animation: float 6s linear infinite;
+}
+
+@keyframes float{
+from{transform:translateY(100vh);}
+to{transform:translateY(-10vh);}
+}
+
+/* PANTALLA MENSAJE */
+
+#mainMessage{
+display:none;
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%, -50%);
+width:90%;
+}
+
+h1{
+font-size:28px;
+line-height:1.5;
+animation: fadeIn 2s ease;
+}
+
+@keyframes fadeIn{
+from{opacity:0}
+to{opacity:1}
+}
+
+/* BOTONES */
+
+.buttons{
+margin-top:30px;
+}
+
+button{
+padding:15px 30px;
+font-size:20px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+transition:0.3s;
+}
+
+#yesBtn{
+background:#ff4d6d;
+color:white;
+}
+
+#noBtn{
+background:#555;
+color:white;
+position:absolute;
+}
+
+#finalScreen{
+display:none;
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%, -50%);
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- MUSICA -->
+<audio autoplay loop>
+<source src="music.mp3" type="audio/mp3">
+</audio>
+
+<!-- FOTOS -->
+<img src="foto1.jpg" class="slide active">
+<img src="foto2.jpg" class="slide">
+<img src="foto3.jpg" class="slide">
+<img src="foto4.jpg" class="slide">
+
+<!-- MENSAJE -->
+<div id="mainMessage">
+<h1>
+Desde que llegaste a mi vida, cada momento es más especial.<br>
+Este 14 de febrero quiero seguir creando recuerdos contigo…<br><br>
+¿Quieres ser mi Valentine y acompañarme a una cena romántica?
+</h1>
+
+<div class="buttons">
+<button id="yesBtn">SÍ ❤️</button>
+<button id="noBtn">NO</button>
+</div>
+</div>
+
+<!-- FINAL -->
+<div id="finalScreen">
+<h1>Sabía que dirías que sí ❤️<br>Prepárate para una noche muy especial. Te amo.</h1>
+</div>
+
+<script>
+
+/* SLIDESHOW */
+let slides = document.querySelectorAll(".slide");
+let index = 0;
+
+setInterval(()=>{
+slides[index].classList.remove("active");
+index++;
+
+if(index === slides.length){
+document.querySelectorAll(".slide").forEach(s => s.style.display="none");
+document.getElementById("mainMessage").style.display="block";
+createHearts();
+return;
+}
+
+slides[index].classList.add("active");
+
+},4000);
+
+/* BOTON NO QUE HUYE */
+
+let noBtn = document.getElementById("noBtn");
+let yesBtn = document.getElementById("yesBtn");
+let size = 20;
+
+noBtn.addEventListener("mouseover",()=>{
+let x = Math.random()*80;
+let y = Math.random()*80;
+noBtn.style.left = x+"vw";
+noBtn.style.top = y+"vh";
+
+size += 5;
+yesBtn.style.fontSize = size+"px";
+});
+
+/* BOTON SI */
+
+yesBtn.addEventListener("click",()=>{
+document.getElementById("mainMessage").style.display="none";
+document.getElementById("finalScreen").style.display="block";
+});
+
+/* CORAZONES */
+
+function createHearts(){
+setInterval(()=>{
+let heart = document.createElement("div");
+heart.className="heart";
+heart.innerHTML="❤️";
+heart.style.left=Math.random()*100+"vw";
+heart.style.fontSize=(10+Math.random()*30)+"px";
+document.body.appendChild(heart);
+
+setTimeout(()=> heart.remove(),6000);
+
+},500);
+}
+
+</script>
+
+</body>
+</html>
